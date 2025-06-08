@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webpage Text Scraper and Summarizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #36A2EB;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #2C8CCF;
+        }
+        .summary, .error {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+        }
+        .summary {
+            background-color: #e0f7fa;
+        }
+        .error {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+        a.download-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #4BC0C0;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        a.download-link:hover {
+            background-color: #3AA8A8;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            const urlInput = document.querySelector('input[name="url"]');
+            const url = urlInput.value.trim();
+            if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                alert("Please enter a valid URL starting with http:// or https://");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <h1>Webpage Text Scraper and Summarizer</h1>
+    <form method="POST" action="/" onsubmit="return validateForm()">
+        <input type="text" name="url" placeholder="Enter webpage URL (e.g., https://example.com)" value="{{ url or '' }}" required>
+        <input type="submit" value="Scrape and Summarize">
+    </form>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if summary %}
+        <div class="summary">
+            <h2>Summary</h2>
+            <p>{{ summary }}</p>
+            <a class="download-link" href="/download">Download Summary</a>
+        </div>
+    {% endif %}
+</body>
+</html>
