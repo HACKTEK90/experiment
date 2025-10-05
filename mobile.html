@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Bicochat — Bilingual AI Chat Assistant</title>
+  <meta name="description" content="Bicochat is a bilingual, text‑based AI chat assistant with conversational answers, study help, writing, and productivity tools." />
+  <meta name="theme-color" content="#1a1a1a" />
+
+  <!-- Fonts: DM Serif Display (headings) + Inter (body) -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg:#1a1a1a;
+      --grain:#141414;
+      --paper:#faf7f2;
+      --ink:#1f2937;
+      --muted:#6b7280;
+      --leather:#3b2a21;
+      --stitch:#e8d8c8;
+      --cta-top:#ffcc7a;
+      --cta-bottom:#ff9a3c;
+      --cta-edge:#a35014;
+      --shadow: rgba(0,0,0,.35);
+      --shadow-soft: rgba(0,0,0,.18);
+      --ring: rgba(255,182,120,.35);
+      --ok:#22c55e;
+      --link:#2b2b2b;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
+      color: var(--ink);
+      background:
+        radial-gradient(1000px 600px at 10% -10%, rgba(255,179,71,.08), transparent 60%),
+        radial-gradient(800px 500px at 110% 110%, rgba(255,154,60,.06), transparent 60%),
+        var(--bg);
+      line-height:1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    body::before{
+      content:"";
+      position:fixed; inset:0;
+      background:
+        repeating-linear-gradient(0deg, transparent 0 2px, rgba(255,255,255,.01) 2px 3px),
+        radial-gradient(ellipse at 30% 20%, rgba(255,255,255,.025), transparent 60%),
+        linear-gradient(180deg, var(--bg), var(--grain));
+      mix-blend-mode: soft-light;
+      pointer-events:none;
+    }
+
+    .wrap{max-width:980px;margin:0 auto;padding:16px 14px 72px}
+
+    /* Leather header with stitches */
+    .nav{
+      position:sticky; top:10px; z-index:20;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 14px;
+      background: linear-gradient(180deg, #4a352a, var(--leather));
+      color:#f7efe8;
+      border-radius:14px;
+      box-shadow: 0 6px 18px var(--shadow), inset 0 -12px 24px rgba(0,0,0,.25);
+      border: 1px solid rgba(0,0,0,.4);
+      overflow:hidden;
+    }
+    .nav::after{
+      content:"";
+      position:absolute; inset:10px;
+      border-top:2px dashed var(--stitch);
+      border-bottom:2px dashed var(--stitch);
+      border-left:0; border-right:0;
+      opacity:.6; pointer-events:none;
+    }
+    .brand{display:flex; align-items:center; gap:10px}
+    .brand h1{
+      margin:0;
+      font-family: "DM Serif Display", ui-serif, Georgia, "Times New Roman", serif;
+      font-size:22px; letter-spacing:.2px; line-height:1.1;
+    }
+    .status{display:flex; align-items:center; gap:6px; font-size:12px; opacity:.9}
+    .dot{width:10px;height:10px;border-radius:999px;background:var(--ok);box-shadow:0 0 0 3px rgba(34,197,94,.18)}
+    .tag{
+      font-size:12px; color:#3a2c20; background: linear-gradient(180deg, #ffe6bf, #f7d5a3);
+      padding:6px 10px; border-radius:999px;
+      border: 1px solid #c59a68;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 2px 6px rgba(0,0,0,.25);
+    }
+
+    /* Hero */
+    .hero{margin-top:14px; display:grid; grid-template-columns: 1fr; gap:14px}
+    .card{
+      position:relative;
+      background: var(--paper);
+      border-radius:16px;
+      border: 1px solid #e7dccf;
+      box-shadow: 0 12px 24px var(--shadow), inset 0 1px 0 rgba(255,255,255,.9), inset 0 -2px 6px rgba(0,0,0,.05);
+      padding:16px;
+    }
+    h2{
+      margin:0 0 6px;
+      font-family: "DM Serif Display", ui-serif, Georgia, "Times New Roman", serif;
+      font-size:26px; line-height:1.15;
+    }
+    .sub{margin:6px 0 12px; color:var(--muted); font-size:15px}
+
+    .cta-row{display:flex; gap:10px; flex-wrap:wrap}
+    .cta{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:12px 14px; border-radius:14px;
+      color:#2a1205; font-weight:700; letter-spacing:.2px;
+      background: linear-gradient(180deg, var(--cta-top), var(--cta-bottom));
+      border: 1px solid var(--cta-edge);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7), 0 3px 0 var(--cta-edge), 0 10px 22px var(--ring);
+      transform: translateY(0);
+      transition: transform .12s ease, box-shadow .2s ease, filter .2s ease;
+      text-decoration:none;
+      -webkit-tap-highlight-color: transparent;
+      min-height:48px;
+    }
+    .cta:active{
+      transform: translateY(2px);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 1px 0 var(--cta-edge), 0 6px 14px var(--ring);
+      filter: saturate(1.05);
+    }
+    .ghost{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:12px 14px; border-radius:14px;
+      background: linear-gradient(180deg, #ffffff, #f1ede6);
+      border:1px solid #ddd5c8; color:#37302b; font-weight:600;
+      text-decoration:none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 0 #cfc6b7, 0 8px 18px rgba(0,0,0,.12);
+      min-height:48px;
+    }
+
+    /* Single viral claim */
+    .speed-claims{margin-top:10px}
+    .claim{
+      margin:0;
+      padding:10px 12px;
+      font-size:15px;
+      color:#3a2f23;
+      background: linear-gradient(180deg, #fff7e7, #ffe7c4);
+      border:1px solid #e8cfa7;
+      border-radius:12px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.9),
+        0 2px 0 rgba(0,0,0,.06),
+        0 8px 14px rgba(0,0,0,.08);
+      font-family: "DM Serif Display", ui-serif, Georgia, "Times New Roman", serif;
+      line-height:1.35;
+      text-align:center;
+    }
+
+    /* Features */
+    .features{display:grid; grid-template-columns: 1fr; gap:12px; margin-top:12px}
+    .feature{
+      background: #fffdf9;
+      border:1px solid #eadfce;
+      border-radius:14px;
+      padding:12px;
+      box-shadow: 0 8px 16px var(--shadow-soft), inset 0 1px 0 rgba(255,255,255,.85);
+    }
+    .fi{
+      width:34px;height:34px;border-radius:8px;
+      display:inline-grid; place-items:center; margin-bottom:6px;
+      background: linear-gradient(180deg, #fff3dc, #ffe1b6);
+      border:1px solid #e9c99a;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 2px 0 #d4b382;
+      color:#5b3a17; font-size:16px;
+      font-family: "DM Serif Display", ui-serif, Georgia, "Times New Roman", serif;
+    }
+    .feature h3{
+      margin:0 0 4px; font-size:16px;
+      font-family: "DM Serif Display", ui-serif, Georgia, "Times New Roman", serif;
+    }
+    .feature p{margin:0; color:var(--muted); font-size:14px}
+
+    /* Goals */
+    .section{margin-top:18px}
+    .section h3{
+      margin:0 0 10px; font-size:18px;
+      font-family: "DM Serif Display", ui-serif, Georgia, "Times New Roman", serif;
+    }
+    .goals{display:grid; grid-template-columns: 1fr; gap:10px}
+    .goal{
+      background: linear-gradient(180deg, #fff9f0, #f6efe4);
+      border:1px dashed #cdb79a;
+      border-radius:12px;
+      padding:12px;
+      box-shadow: 0 6px 14px rgba(0,0,0,.12), inset 0 1px 0 rgba(255,255,255,.9);
+    }
+    .goal strong{
+      color:#2a1c14;
+      font-family: "DM Serif Display", ui-serif, Georgia, "Times New Roman", serif;
+    }
+    .goal span{display:block; color:#6d6258; font-size:14px; margin-top:4px}
+
+    .foot{
+      margin-top:18px; font-size:12px; color:#b8b2ab;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      border-top:1px solid rgba(255,255,255,.06); padding-top:10px;
+    }
+
+    @media (min-width: 640px){
+      h2{font-size:32px}
+      .features{grid-template-columns: 1fr 1fr}
+      .goals{grid-template-columns: 1fr 1fr}
+    }
+    @media (min-width: 980px){
+      .features{grid-template-columns: 1fr 1fr 1fr}
+      .goals{grid-template-columns: 1fr 1fr 1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="nav" role="banner" aria-label="Bicochat top bar">
+      <div class="brand">
+        <h1>Bicochat</h1>
+        <div class="status"><span class="dot"></span>Online • Bilingual assistant</div>
+      </div>
+      <div class="tag" aria-label="Text-based AI chat">Text‑based AI</div>
+    </div>
+
+    <section class="hero" role="region" aria-label="Hero">
+      <div class="card">
+        <h2>Talk naturally in two languages with a tactile, text‑first AI</h2>
+        <p class="sub">Bicochat offers fast answers, study help, writing, and summaries, while smoothly switching languages without losing context.</p>
+
+        <div class="cta-row" style="margin-bottom:10px">
+          <a class="cta" href="https://black-ice-3dbk.onrender.com/ai-chat.html" target="_blank" rel="noopener">
+            Open Bicochat
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 17L17 7M17 7H9M17 7v8" stroke="#4a2007" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <!-- Fixed "See features" button: consistent styling, smooth scroll -->
+          <a class="ghost" href="#features" aria-label="See features">
+            See features
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" stroke="#6b6258" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Single viral claim -->
+        <div class="speed-claims" aria-label="Speed claim">
+          <p class="claim">World’s fastest response time AI</p>
+        </div>
+
+        <div id="features" class="features" role="list">
+          <div class="feature" role="listitem">
+            <div class="fi">💬</div>
+            <h3>Conversational answers</h3>
+            <p>Ask in plain language and receive concise, stepwise explanations with examples where useful.</p>
+          </div>
+          <div class="feature" role="listitem">
+            <div class="fi">🌐</div>
+            <h3>Bilingual switching</h3>
+            <p>Start in one language and continue in another; the chat keeps context across turns.</p>
+          </div>
+          <div class="feature" role="listitem">
+            <div class="fi">📝</div>
+            <h3>Writing & editing</h3>
+            <p>Draft emails, summaries, outlines, and refine grammar, tone, and length quickly.</p>
+          </div>
+          <div class="feature" role="listitem">
+            <div class="fi">📚</div>
+            <h3>Study assistance</h3>
+            <p>Break down concepts, derive key formulas, and generate practice prompts for revision.</p>
+          </div>
+          <div class="feature" role="listitem">
+            <div class="fi">👨‍💻</div>
+            <h3>Coding help</h3>
+            <p>Explain snippets, fix bugs, and convert code between languages with focused examples.</p>
+          </div>
+          <div class="feature" role="listitem">
+            <div class="fi">⚡</div>
+            <h3>Productivity boosts</h3>
+            <p>Summarize long text, extract key points, and create action lists to save time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Goals">
+      <h3>Goals</h3>
+      <div class="goals">
+        <div class="goal">
+          <strong>Clarity first</strong>
+          <span>Deliver direct, structured answers with steps or examples for quick understanding.</span>
+        </div>
+        <div class="goal">
+          <strong>Faster study</strong>
+          <span>Turn complex topics into short explanations and quick practice prompts.</span>
+        </div>
+        <div class="goal">
+          <strong>Language respect</strong>
+          <span>Detect and respond in the preferred language without manual toggles.</span>
+        </div>
+        <div class="goal">
+          <strong>Writing speed</strong>
+          <span>Draft, iterate, and refine tone and length for emails and summaries.</span>
+        </div>
+        <div class="goal">
+          <strong>Context memory</strong>
+          <span>Maintain conversation state across follow‑ups to avoid repetition.</span>
+        </div>
+        <div class="goal">
+          <strong>Trustworthy</strong>
+          <span>Avoid over‑claiming and encourage checks for critical topics.</span>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot" role="contentinfo">
+      <div>© <span id="year"></span> Bicochat</div>
+      <div>Built for helpful, bilingual, text‑first conversations.</div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
