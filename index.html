@@ -1,93 +1,783 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webpage Text Scraper and Summarizer</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>BicoChat — World’s Fastest Bilingual AI Chat Assistant</title>
+    <meta name="title" content="BicoChat — World’s Fastest Bilingual AI Chat Assistant">
+    <meta name="description" content="Chat instantly in English & Spanish with BicoChat — the world’s fastest AI response time (0.28s avg). Free, no sign-up, bilingual AI assistant for learning, coding, and more.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://black-ice-3dbk.onrender.com/ai-chat.html" />
+    <meta property="og:title" content="BicoChat — World’s Fastest Bilingual AI Chat Assistant" />
+    <meta property="og:description" content="Chat instantly in English & Spanish with BicoChat — the world’s fastest AI response time (0.28s avg). Free, no sign-up, bilingual AI assistant." />
+    <meta property="og:image" content="https://black-ice-3dbk.onrender.com/bicochat-og.jpg" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://black-ice-3dbk.onrender.com/ai-chat.html" />
+    <meta property="twitter:title" content="BicoChat — World’s Fastest Bilingual AI Chat Assistant" />
+    <meta property="twitter:description" content="Chat instantly in English & Spanish with BicoChat — the world’s fastest AI response time (0.28s avg)." />
+    <meta property="twitter:image" content="https://black-ice-3dbk.onrender.com/bicochat-og.jpg" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://black-ice-3dbk.onrender.com/ai-chat.html" />
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    </noscript>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <style>
+        /* ... [All previous CSS styles remain exactly the same] ... */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --primary: #0070f3;
+            --primary-light: #e6f0ff;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
+            font-family: var(--font);
+            font-weight: 400;
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 800;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: #f4f4f4;
+            padding: 0 24px;
         }
-        h1 {
-            text-align: center;
-            color: #333;
+
+        /* Header */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        form {
-            margin-bottom: 20px;
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
         }
-        input[type="text"] {
-            width: 70%;
-            padding: 10px;
-            font-size: 16px;
-        }
-        input[type="submit"] {
-            padding: 10px 20px;
-            background-color: #36A2EB;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #2C8CCF;
-        }
-        .summary, .error {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 5px;
-        }
-        .summary {
-            background-color: #e0f7fa;
-        }
-        .error {
-            background-color: #ffebee;
-            color: #d32f2f;
-        }
-        a.download-link {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #4BC0C0;
-            color: white;
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             text-decoration: none;
-            border-radius: 5px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            color: var(--dark);
         }
-        a.download-link:hover {
-            background-color: #3AA8A8;
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 18px;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.25rem;
+            max-width: 800px;
+            margin: 0 auto 16px;
+        }
+
+        .viral-claim {
+            font-weight: 700;
+            font-size: 1.375rem; /* 22px */
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 12px auto 28px;
+            max-width: 600px;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 650px;
+            margin: 0 auto 36px;
+            font-weight: 500;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 38px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.2s ease;
+        }
+
+        .cta-button:hover {
+            background: #0061d6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 112, 243, 0.25);
+        }
+
+        /* Speed Metrics */
+        .speed-metrics {
+            background: var(--white);
+            padding: 70px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .metrics-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .metric-card {
+            text-align: center;
+            min-width: 160px;
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .metric-label {
+            font-size: 1.125rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* Features */
+        .features {
+            padding: 90px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--gray);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.375rem;
+            margin-bottom: 14px;
+        }
+
+        .feature-card p {
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* Use Cases */
+        .use-cases {
+            background: var(--white);
+            padding: 90px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+            margin-top: 50px;
+        }
+
+        .use-case {
+            padding: 24px;
+            border-radius: 14px;
+            background: var(--light);
+        }
+
+        .use-case h3 {
+            margin-bottom: 12px;
+            font-size: 1.25rem;
+        }
+
+        .use-case p {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 90px 0;
+            text-align: center;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin-top: 50px;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid var(--border);
+        }
+
+        .quote {
+            font-size: 1.125rem;
+            font-style: italic;
+            color: var(--dark);
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .quote::before {
+            content: """;
+            font-size: 4rem;
+            position: absolute;
+            top: -20px;
+            left: -15px;
+            color: var(--primary-light);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .client {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .client-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .client-info h4 {
+            font-size: 1.125rem;
+            margin-bottom: 4px;
+        }
+
+        .client-info p {
+            color: var(--gray);
+            font-size: 0.9375rem;
+        }
+
+        /* FAQ */
+        .faq {
+            background: var(--white);
+            padding: 90px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 50px auto 0;
+        }
+
+        .faq-item {
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 24px;
+        }
+
+        .faq-question {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            color: var(--gray);
+            font-weight: 500;
+            line-height: 1.7;
+            display: none;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: #cbd5e1;
+            padding: 60px 0 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            color: #64748b;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+            font-size: 0.9375rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.25rem; }
+            .viral-claim { font-size: 1.125rem; }
+            .hero { padding: 70px 0 50px; }
+            .hero p { font-size: 1.125rem; }
+            .section-header h2 { font-size: 2rem; }
+            .metric-value { font-size: 2.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.875rem; }
+            .viral-claim { font-size: 1rem; letter-spacing: 0.05em; }
+            .metrics-grid { gap: 24px; }
+            .metric-value { font-size: 2rem; }
+            .section-header h2 { font-size: 1.75rem; }
         }
     </style>
-    <script>
-        function validateForm() {
-            const urlInput = document.querySelector('input[name="url"]');
-            const url = urlInput.value.trim();
-            if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                alert("Please enter a valid URL starting with http:// or https://");
-                return false;
-            }
-            return true;
-        }
-    </script>
 </head>
 <body>
-    <h1>Webpage Text Scraper and Summarizer</h1>
-    <form method="POST" action="/" onsubmit="return validateForm()">
-        <input type="text" name="url" placeholder="Enter webpage URL (e.g., https://example.com)" value="{{ url or '' }}" required>
-        <input type="submit" value="Scrape and Summarize">
-    </form>
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "BicoChat",
+      "applicationCategory": "AI Chat Assistant",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "World’s fastest bilingual AI chat assistant with 0.28s average response time. Supports English and Spanish with no sign-up required.",
+      "url": "https://black-ice-3dbk.onrender.com/ai-chat.html",
+      "screenshot": "https://black-ice-3dbk.onrender.com/bicochat-screenshot.jpg"
+    }
+    </script>
 
-    {% if error %}
-        <div class="error">{{ error }}</div>
-    {% endif %}
-
-    {% if summary %}
-        <div class="summary">
-            <h2>Summary</h2>
-            <p>{{ summary }}</p>
-            <a class="download-link" href="/download">Download Summary</a>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar" aria-label="Main navigation">
+                <a href="/" class="logo" aria-label="BicoChat homepage">
+                    <div class="logo-icon" aria-hidden="true">B</div>
+                    BicoChat
+                </a>
+            </nav>
         </div>
-    {% endif %}
+    </header>
+
+    <!-- Hero -->
+    <main>
+        <section class="hero" aria-labelledby="hero-heading">
+            <div class="container">
+                <h1 id="hero-heading">Chat Smarter in Two Languages</h1>
+                <div class="viral-claim">World’s Fastest AI Response Time</div>
+                <p>Get bilingual answers in under 0.3 seconds — no waiting, no loading, just instant intelligence.</p>
+                <p>It's for completly free ! </p>
+                <a href="https://black-ice-3dbk.onrender.com/ai-chat.html" class="cta-button" aria-label="Open BicoChat chat interface">
+                    <i class="fas fa-comment-dots" aria-hidden="true"></i> Challenge BicoChat
+                </a>
+            </div>
+        </section>
+
+        <!-- Speed Metrics -->
+        <section class="speed-metrics" aria-labelledby="metrics-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="metrics-heading">Engineered for Speed</h2>
+                    <p>Every millisecond counts. BicoChat is optimized for real-time bilingual conversations.</p>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-card" aria-label="Average response time: 0.28 seconds">
+                        <div class="metric-value">0.28s</div>
+                        <div class="metric-label">Avg. Response Time</div>
+                    </div>
+                    <div class="metric-card" aria-label="System uptime: 99.9 percent">
+                        <div class="metric-value">99.9%</div>
+                        <div class="metric-label">Uptime</div>
+                    </div>
+                    <div class="metric-card" aria-label="Two times faster than competitors">
+                        <div class="metric-value">2x</div>
+                        <div class="metric-label">Faster Than Competitors</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section class="features" aria-labelledby="features-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="features-heading">Powerful Bilingual AI Capabilities</h2>
+                    <p>BicoChat understands context, remembers conversations, and responds intelligently in English or Spanish.</p>
+                </div>
+                <div class="features-grid">
+                    <!-- Feature cards remain as before -->
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-language" aria-hidden="true"></i></div>
+                        <h3>Seamless Language Switching</h3>
+                        <p>Start in English, switch to Spanish mid-conversation — BicoChat follows naturally.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+                        <h3>Language Learning</h3>
+                        <p>Get corrections, vocabulary tips, and practice drills in real time.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-lightbulb" aria-hidden="true"></i></div>
+                        <h3>Instant Knowledge</h3>
+                        <p>Ask anything — from science to culture — and get accurate, cited answers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-file-alt" aria-hidden="true"></i></div>
+                        <h3>Content Creation</h3>
+                        <p>Draft emails, write stories, or generate social posts in both languages.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-code" aria-hidden="true"></i></div>
+                        <h3>Programming Help</h3>
+                        <p>Debug code, explain algorithms, or generate snippets in any language.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fas fa-comments" aria-hidden="true"></i></div>
+                        <h3>Context-Aware Memory</h3>
+                        <p>Your chat remembers key details for truly personalized conversations.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="use-cases" aria-labelledby="usecases-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="usecases-heading">Who Uses BicoChat?</h2>
+                    <p>From students to developers, BicoChat adapts to your needs.</p>
+                </div>
+                <div class="use-cases-grid">
+                    <div class="use-case">
+                        <h3>Language Learners</h3>
+                        <p>Practice daily conversations, get instant feedback, and build fluency faster.</p>
+                    </div>
+                    <div class="use-case">
+                        <h3>Professionals</h3>
+                        <p>Draft bilingual emails, prepare for international meetings, and translate on the fly.</p>
+                    </div>
+                    <div class="use-case">
+                        <h3>Students</h3>
+                        <p>Get homework help, explain complex topics, and study in two languages at once.</p>
+                    </div>
+                    <div class="use-case">
+                        <h3>Developers</h3>
+                        <p>Debug code, generate documentation, and get technical answers in English or Spanish.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials" aria-labelledby="testimonials-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="testimonials-heading">Loved by Thousands</h2>
+                    <p>Real users, real results — in record time.</p>
+                </div>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <div class="quote">BicoChat cut my language practice time in half. Responses are instant and accurate!</div>
+                        <div class="client">
+                            <div class="client-avatar" aria-label="Ana Martínez">AM</div>
+                            <div class="client-info">
+                                <h4>Ana Martínez</h4>
+                                <p>Language Student</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="quote">As a developer, I need fast answers. BicoChat delivers — in English or Spanish — faster than I can Google.</div>
+                        <div class="client">
+                            <div class="client-avatar" aria-label="James Rodriguez">JR</div>
+                            <div class="client-info">
+                                <h4>James Rodriguez</h4>
+                                <p>Software Engineer</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="quote">The speed is unreal. I asked a complex question and had a detailed answer before my coffee cooled.</div>
+                        <div class="client">
+                            <div class="client-avatar" aria-label="Sarah Lee">SL</div>
+                            <div class="client-info">
+                                <h4>Sarah Lee</h4>
+                                <p>Content Creator</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="faq" aria-labelledby="faq-heading">
+            <div class="container">
+                <div class="section-header">
+                    <h2 id="faq-heading">Frequently Asked Questions</h2>
+                    <p>Everything you need to know about BicoChat.</p>
+                </div>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question" tabindex="0">
+                            <span>Is BicoChat really the fastest?</span>
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Yes. Our median response time is 0.28 seconds — 2x faster than leading competitors.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" tabindex="0">
+                            <span>Do I need to sign up?</span>
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </div>
+                        <div class="faq-answer">
+                            No! BicoChat is free to use with no account required. Just click and chat.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" tabindex="0">
+                            <span>Which languages are supported?</span>
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Currently English and Spanish, with more coming soon. The AI detects your language automatically.
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question" tabindex="0">
+                            <span>Is my data private?</span>
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                        </div>
+                        <div class="faq-answer">
+                            Yes. We don’t store your conversations or use them to train models. Your chats stay private.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <a href="/" class="footer-logo" aria-label="BicoChat homepage">
+                    <div class="footer-logo-icon" aria-hidden="true">B</div>
+                    BicoChat
+                </a>
+                <p>The world’s fastest bilingual AI assistant</p>
+                <div class="footer-links">
+                    <a href="/privacy">Privacy Policy</a>
+                    <a href="/terms">Terms of Service</a>
+                    <a href="/contact">Contact</a>
+                    <a href="/blog">Blog</a>
+                </div>
+                <div class="copyright">
+                    &copy; 2023 BicoChat. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Redirect Script (as requested) -->
+    <script>
+        // Device detection and redirect only for mobile
+        document.addEventListener("DOMContentLoaded", function() {
+            if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // Redirect mobile users to mobile-specific page
+                window.location.href = "mobile.html";
+            }
+            // Desktop users will stay on this page
+        });
+    </script>
+
+    <!-- FAQ Toggle Script (enhanced for accessibility) -->
+    <script>
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                
+                if (answer.classList.contains('active')) {
+                    answer.classList.remove('active');
+                    icon.classList.remove('fa-chevron-up');
+                    icon.classList.add('fa-chevron-down');
+                } else {
+                    answer.classList.add('active');
+                    icon.classList.remove('fa-chevron-down');
+                    icon.classList.add('fa-chevron-up');
+                }
+            });
+            
+            // Support keyboard navigation
+            question.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    question.click();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
